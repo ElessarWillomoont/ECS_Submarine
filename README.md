@@ -7,7 +7,7 @@ ECS Submarine is a game developed using Python's Arcade library, implementing th
 ### Clone the Repository
 Clone this repository to your local machine:
 ```bash
-git clone <repository_url>
+git clone https://github.com/ElessarWillomoont/ECS_Submarine
 ```
 
 ### Install Dependencies
