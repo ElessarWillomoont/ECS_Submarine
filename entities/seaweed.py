@@ -1,10 +1,6 @@
-from components.position import Position
-from components.render import Render
-import arcade
+from entity_factory import create_entity_with_components
 
-def create_seaweed(ecs_manager):
-    seaweed = ecs_manager.create_entity()
-    seaweed_sprite = arcade.Sprite("assets/seaweed.png", 0.5)
-    seaweed.add_component("Position", Position(100, 150))
-    seaweed.add_component("Render", Render(seaweed_sprite))
-    return seaweed
+def create_seaweed(ecs_manager, rel_x, rel_y):
+    return create_entity_with_components(
+        ecs_manager, "assets/seaweed.png", 0.5, rel_x, rel_y
+    )

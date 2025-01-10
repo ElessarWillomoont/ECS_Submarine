@@ -1,10 +1,6 @@
-from components.position import Position
-from components.render import Render
-import arcade
+from entity_factory import create_entity_with_components
 
-def create_whale(ecs_manager):
-    whale = ecs_manager.create_entity()
-    whale_sprite = arcade.Sprite("assets/whale.png", 0.8)
-    whale.add_component("Position", Position(500, 300))
-    whale.add_component("Render", Render(whale_sprite))
-    return whale
+def create_whale(ecs_manager, rel_x, rel_y):
+    return create_entity_with_components(
+        ecs_manager, "assets/whale.png", 0.8, rel_x, rel_y
+    )

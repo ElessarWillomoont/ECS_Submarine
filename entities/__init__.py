@@ -7,6 +7,6 @@ from .torpedo import create_torpedo
 from .mine import create_mine
 from .seaweed import create_seaweed
 from .whale import create_whale
-from .lighthouse import create_lighthouse  
-from .lawn import create_lawn              
-from .soil import create_soil              
+from .lighthouse import create_lighthouse
+from .lawn import create_lawn
+from .soil import create_soil

@@ -1,10 +1,6 @@
-from components.position import Position
-from components.render import Render
-import arcade
+from entity_factory import create_entity_with_components
 
-def create_lawn(ecs_manager):
-    lawn = ecs_manager.create_entity()
-    lawn_sprite = arcade.Sprite("assets/lawn.png", 0.6)
-    lawn.add_component("Position", Position(600, 100))
-    lawn.add_component("Render", Render(lawn_sprite))
-    return lawn
+def create_lawn(ecs_manager, rel_x, rel_y):
+    return create_entity_with_components(
+        ecs_manager, "assets/lawn.png", 0.6, rel_x, rel_y
+    )

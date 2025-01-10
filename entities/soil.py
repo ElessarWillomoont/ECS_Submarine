@@ -1,10 +1,6 @@
-from components.position import Position
-from components.render import Render
-import arcade
+from entity_factory import create_entity_with_components
 
-def create_soil(ecs_manager):
-    soil = ecs_manager.create_entity()
-    soil_sprite = arcade.Sprite("assets/soil.png", 0.5)
-    soil.add_component("Position", Position(400, 50))
-    soil.add_component("Render", Render(soil_sprite))
-    return soil
+def create_soil(ecs_manager, rel_x, rel_y):
+    return create_entity_with_components(
+        ecs_manager, "assets/soil.png", 0.5, rel_x, rel_y
+    )

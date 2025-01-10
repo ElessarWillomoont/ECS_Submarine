@@ -1,10 +1,6 @@
-from components.position import Position
-from components.render import Render
-import arcade
+from entity_factory import create_entity_with_components
 
-def create_volcano(ecs_manager):
-    volcano = ecs_manager.create_entity()
-    volcano_sprite = arcade.Sprite("assets/volcano.png", 0.5)
-    volcano.add_component("Position", Position(200, 100))
-    volcano.add_component("Render", Render(volcano_sprite))
-    return volcano
+def create_volcano(ecs_manager, rel_x, rel_y):
+    return create_entity_with_components(
+        ecs_manager, "assets/volcano.png", 0.5, rel_x, rel_y
+    )

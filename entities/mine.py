@@ -1,10 +1,6 @@
-from components.position import Position
-from components.render import Render
-import arcade
+from entity_factory import create_entity_with_components
 
-def create_mine(ecs_manager):
-    mine = ecs_manager.create_entity()
-    mine_sprite = arcade.Sprite("assets/mine.png", 0.3)
-    mine.add_component("Position", Position(800, 200))
-    mine.add_component("Render", Render(mine_sprite))
-    return mine
+def create_mine(ecs_manager, rel_x, rel_y):
+    return create_entity_with_components(
+        ecs_manager, "assets/mine.png", 0.3, rel_x, rel_y
+    )
