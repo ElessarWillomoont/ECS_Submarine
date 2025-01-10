@@ -22,13 +22,15 @@ Run the game using the following command:
 python main.py
 ```
 
-Alternatively, precompiled executables are available in the project's Releases section for **Windows** and **Linux** users. (Note: Currently, only Windows and Linux versions are provided, as the author uses Windows and WSL.)
+Alternatively, precompiled executables are available in the project's Releases section for **Windows** and **Linux** users. *(Note: Currently, only Windows and Linux versions are provided, as the author uses Windows and WSL.)*
 
 ## Current Progress
 
-At the moment, the game includes the following feature:
+At the moment, the game includes the following features:
 - Basic player movement using the arrow keys (Up, Down, Left, Right).
+- Control the horizon line's vertical position using the `V` and `B` keys.
 
 ---
 
 More features will be added in future updates!
+

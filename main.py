@@ -15,7 +15,7 @@ from entities import (
     create_whale,
     create_lighthouse,
     create_lawn,
-    create_soil
+    create_soil,
 )
 
 
@@ -26,7 +26,12 @@ class MyGame(arcade.Window):
         super().__init__(1280, 720, "ECS Submarine Game")
         arcade.set_background_color(arcade.color.BLACK)
 
-        self.background = arcade.load_texture("assets/Background.png")
+        # Load background images
+        self.background_sky = arcade.load_texture("assets/Background_Sky.png")
+        self.background_ocean = arcade.load_texture("assets/Background.png")
+
+        # Initialize horizon height (default to middle of screen)
+        self.horizon_height = self.height // 2
 
         self.ecs_manager = ECSManager()
         self.command_queue = []
@@ -48,13 +53,56 @@ class MyGame(arcade.Window):
         create_seaweed(self.ecs_manager)
         create_whale(self.ecs_manager)
         create_lighthouse(self.ecs_manager)
-        create_lawn(self.ecs_manager) 
-        create_soil(self.ecs_manager) 
+        create_lawn(self.ecs_manager)
+        create_soil(self.ecs_manager)
 
     def on_draw(self):
         arcade.start_render()
-        arcade.draw_lrwh_rectangle_textured(0, 0, self.width, self.height, self.background)
+        # Draw the dynamic background
+        self.draw_background()
+
+        # Update and draw all entities
         self.ecs_manager.update(0)
+
+    def draw_background(self):
+        # Calculate the scale factor to maintain the aspect ratio
+        sky_scale = self.width / self.background_sky.width
+        ocean_scale = self.width / self.background_ocean.width
+
+        # Calculate the display height for both images
+        sky_height = self.background_sky.height * sky_scale
+        ocean_height = self.background_ocean.height * ocean_scale
+
+        # Draw the sky part
+        arcade.draw_lrwh_rectangle_textured(
+            0,
+            self.horizon_height,  # Y position starts at horizon
+            self.width,
+            sky_height,
+            self.background_sky,
+        )
+
+        # Draw the ocean part
+        arcade.draw_lrwh_rectangle_textured(
+            0,
+            self.horizon_height - ocean_height,  # Adjust ocean to start below the horizon
+            self.width,
+            ocean_height,
+            self.background_ocean,
+        )
+
+        # Add a gradient transition at the horizon
+        gradient_height = 50  # Height of the gradient region
+        for i in range(gradient_height):
+            alpha = int(255 * (1 - i / gradient_height))  # Gradually decrease opacity
+            arcade.draw_rectangle_filled(
+                self.width / 2,  # Centered horizontally
+                self.horizon_height - i,  # Vertical position moves down
+                self.width,  # Full width of the screen
+                1,  # Height of each gradient step
+                (0, 0, 0, alpha)  # Semi-transparent black (adjust if needed)
+            )
+
 
     def on_key_press(self, key, modifiers):
         position = self.player.get_component("Position")
@@ -66,6 +114,12 @@ class MyGame(arcade.Window):
             position.x -= self.MOVE_DISTANCE
         elif key == arcade.key.RIGHT:
             position.x += self.MOVE_DISTANCE
+        elif key == arcade.key.V:
+            # Increase horizon height (sky expands)
+            self.horizon_height = min(self.horizon_height + 20, self.height)
+        elif key == arcade.key.B:
+            # Decrease horizon height (ocean expands)
+            self.horizon_height = max(self.horizon_height - 20, 0)
 
     def update(self, delta_time):
         self.ecs_manager.update(delta_time)
